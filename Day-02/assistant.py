@@ -78,9 +78,11 @@ while True:
         }
     )
 
-    print("\n---------- Conversation History ----------")
+ ##only for debugging
+   ## print("\n---------- Conversation History ----------")
 
-    for message in messages:
-        print(message)
+    #for message in messages:
+     #   print(message)
 
-    print("------------------------------------------")
+    #print("------------------------------------------")
+    
