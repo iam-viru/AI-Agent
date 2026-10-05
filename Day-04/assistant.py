@@ -1,22 +1,30 @@
 from openai import OpenAI
 from dotenv import load_dotenv
 import os
-from tools import(get_current_time,roll_dice,generate_password)
+
+from tools import (
+    get_current_time,
+    roll_dice,
+    generate_password
+)
+
 from tools_manager import execute_tool
 
-# Load configurations
+
+# Load configuration
 load_dotenv()
 
 # Create AI client
 client = OpenAI(
-    base_url=os.getenv("Base_URL"),
+    base_url=os.getenv("BASE_URL"),
     api_key=os.getenv("API_KEY")
 )
 
 print("=" * 40)
-print("      My AI Assistant ")
+print("      My AI Assistant")
 print("=" * 40)
-roles={
+
+roles = {
     "1": "You are a friendly school teacher. Explain every concept using simple language and real-life examples.",
 
     "2": "You are a senior Python developer. Explain programming concepts clearly and always include Python examples.",
@@ -28,6 +36,7 @@ roles={
     "5": "You are a professional interviewer. Ask one interview question at a time and provide feedback after each answer."
 }
 
+
 print("\nChoose Your Assistant\n")
 
 print("1. Teacher")
@@ -35,6 +44,7 @@ print("2. Python Expert")
 print("3. Travel Guide")
 print("4. Motivational Coach")
 print("5. Interviewer")
+
 choice = input("\nEnter your choice : ")
 
 messages = [
@@ -47,18 +57,20 @@ messages = [
     }
 ]
 
+
 while True:
 
     user_input = input("\nYou : ")
-    tools_result=execute_tool(user_input)
-
-    if tools_result:
-
-        print("\nAI :", get_current_time())
-
-        continue  
-
     # Save the user's message
+
+    tool_result = execute_tool(user_input)
+
+    if tool_result:
+
+        print("\nAI :", tool_result)
+
+        continue
+
     messages.append(
         {
             "role": "user",
@@ -67,7 +79,7 @@ while True:
     )
 
     if user_input.lower() == "quit":
-        print("\nAI : Goodbye! Have a great day.")
+        print("\nAI  : Goodbye! Have a great day.")
         break
 
     response = client.chat.completions.create(
@@ -87,11 +99,4 @@ while True:
         }
     )
 
- ##only for debugging
-   ## print("\n---------- Conversation History ----------")
-
-    #for message in messages:
-     #   print(message)
-
-    #print("------------------------------------------")
     
