@@ -2,6 +2,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 import os
 from tools import(get_current_time,roll_dice,generate_password)
+from tools_manager import execute_tool
 
 # Load configurations
 load_dotenv()
@@ -49,24 +50,13 @@ messages = [
 while True:
 
     user_input = input("\nYou : ")
+    tools_result=execute_tool(user_input)
 
-    if "time" in user_input.lower():
+    if tools_result:
 
         print("\nAI :", get_current_time())
 
-        continue
-
-    if "dice" in user_input.lower():
-
-        print("\nAI : You rolled", roll_dice())
-
-        continue
-
-    if "password" in user_input.lower():
-
-        print("\nAI :", generate_password())
-
-        continue
+        continue  
 
     # Save the user's message
     messages.append(
